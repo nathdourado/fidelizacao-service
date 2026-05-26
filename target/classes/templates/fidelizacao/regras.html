@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regras de Fidelização</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(243,220,226,0.92) 48%, rgba(230,192,208,0.92) 100%),
+                radial-gradient(circle at top left, rgba(166,124,128,0.12), transparent 30%);
+            color: #4a2c2a;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: rgba(255,255,255,0.86);
+            padding: 12px 24px;
+            box-shadow: 0 10px 28px rgba(74,44,42,0.08);
+            border-bottom: 1px solid rgba(166,124,128,0.22);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            backdrop-filter: blur(12px);
+        }
+
+        .navbar ul {
+            align-items: center;
+            background-color: rgba(240,239,241,0.72);
+            border: 1px solid rgba(166,124,128,0.16);
+            border-radius: 999px;
+            list-style: none;
+            display: flex;
+            gap: 8px;
+            padding: 6px;
+        }
+
+        .navbar a {
+            color: #333;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 999px;
+            display: inline-block;
+            padding: 10px 18px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .navbar a:hover {
+            background-color: #f3dce2;
+            color: #4a2c2a;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 34px;
+            background-color: rgba(255,255,255,0.94);
+            border: 1px solid rgba(166,124,128,0.16);
+            border-radius: 18px;
+            box-shadow: 0 22px 54px rgba(74,44,42,0.12);
+        }
+
+        .titulo {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #4a2c2a;
+            margin-bottom: 12px;
+        }
+
+        .subtitulo {
+            max-width: 720px;
+            margin: 0 auto 30px;
+            color: #6d5452;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .card {
+            background-color: #fff7f9;
+            border: 1px solid #ead8dc;
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .card h2 {
+            color: #4a2c2a;
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .card p,
+        .card li {
+            color: #6d5452;
+            font-size: 0.96rem;
+            line-height: 1.55;
+        }
+
+        .card ul {
+            padding-left: 18px;
+        }
+
+        .fluxo {
+            background-color: #fff;
+            border: 1px solid #ead8dc;
+            border-radius: 14px;
+            padding: 22px;
+        }
+
+        .fluxo h2 {
+            color: #4a2c2a;
+            font-size: 1.3rem;
+            margin-bottom: 14px;
+        }
+
+        .passos {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .passo {
+            background-color: #f8e7ec;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .passo strong {
+            display: block;
+            color: #4a2c2a;
+            margin-bottom: 8px;
+        }
+
+        .passo span {
+            color: #6d5452;
+            line-height: 1.45;
+        }
+
+        .btn-voltar {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 46px;
+            margin-top: 24px;
+            padding: 12px 24px;
+            background-color: #a67c80;
+            color: #fff;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 12px 26px rgba(166,124,128,0.28);
+        }
+
+        .btn-voltar:hover {
+            background-color: #8f6266;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                max-width: calc(100% - 48px);
+                margin: 35px auto;
+                padding: 26px;
+            }
+
+            .titulo {
+                font-size: 2rem;
+            }
+
+            .grid,
+            .passos {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 12px;
+            }
+
+            .navbar ul {
+                width: 100%;
+                border-radius: 14px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .container {
+                max-width: calc(100% - 24px);
+                margin: 24px auto;
+                padding: 20px 16px;
+            }
+
+            .titulo {
+                font-size: 1.65rem;
+            }
+
+            .grid,
+            .passos {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-voltar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="navbar">
+    <ul>
+        <li><a href="http://localhost:8080/Index">BakeFlow</a></li>
+        <li><a href="/fidelizacao/relatorio">Relatório</a></li>
+        <li><a href="http://localhost:8080/pedidos/novo">Novo pedido</a></li>
+    </ul>
+</header>
+
+<main class="container">
+    <h1 class="titulo">Como funciona a fidelização</h1>
+    <p class="subtitulo">
+        O programa de fidelização transforma pedidos finalizados em pontos para o cliente.
+        Esses pontos ajudam a identificar clientes recorrentes e benefícios disponíveis.
+    </p>
+
+    <section class="grid">
+        <article class="card">
+            <h2>Pontuação</h2>
+            <p>A cada R$ 1,00 em pedido finalizado, o cliente ganha 1 ponto.</p>
+        </article>
+
+        <article class="card">
+            <h2>Bônus</h2>
+            <p>Pedidos a partir de R$ 150,00 recebem 20 pontos extras automaticamente.</p>
+        </article>
+
+        <article class="card">
+            <h2>Benefício</h2>
+            <p>A cada 100 pontos acumulados, o sistema gera 1 benefício para o cliente.</p>
+        </article>
+    </section>
+
+    <section class="grid">
+        <article class="card">
+            <h2>Níveis</h2>
+            <ul>
+                <li>Bronze: até 99 pontos acumulados.</li>
+                <li>Prata: a partir de 100 pontos acumulados.</li>
+                <li>Ouro: a partir de 300 pontos acumulados.</li>
+            </ul>
+        </article>
+
+        <article class="card">
+            <h2>Sem duplicidade</h2>
+            <p>Um mesmo pedido só gera pontos uma vez. O histórico registra o pedido para evitar pontuação duplicada.</p>
+        </article>
+
+        <article class="card">
+            <h2>Relatório</h2>
+            <p>A tela de fidelização mostra pontos atuais, benefícios, nível do cliente e histórico de pontos gerados.</p>
+        </article>
+    </section>
+
+    <section class="fluxo">
+        <h2>Fluxo no sistema</h2>
+        <div class="passos">
+            <div class="passo">
+                <strong>1. Pedido</strong>
+                <span>O usuário cadastra ou atualiza um pedido no BakeFlow.</span>
+            </div>
+            <div class="passo">
+                <strong>2. Status</strong>
+                <span>Quando o status fica Finalizado, o evento é enviado.</span>
+            </div>
+            <div class="passo">
+                <strong>3. Microserviço</strong>
+                <span>O serviço de fidelização calcula pontos e benefícios.</span>
+            </div>
+            <div class="passo">
+                <strong>4. Consulta</strong>
+                <span>O resultado aparece no relatório de fidelização.</span>
+            </div>
+        </div>
+    </section>
+
+    <a href="/fidelizacao/relatorio" class="btn-voltar">Voltar ao relatório</a>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+br\com\bakeflow\fidelizacao\model\FidelizacaoCliente.class
+br\com\bakeflow\fidelizacao\service\FidelizacaoService.class
+br\com\bakeflow\fidelizacao\controller\FidelizacaoInfoController.class
+br\com\bakeflow\fidelizacao\controller\FidelizacaoApiController.class
+br\com\bakeflow\fidelizacao\controller\FidelizacaoController.class
+br\com\bakeflow\fidelizacao\model\HistoricoFidelizacao.class
+br\com\bakeflow\fidelizacao\repository\FidelizacaoClienteRepository.class
+br\com\bakeflow\fidelizacao\repository\HistoricoFidelizacaoRepository.class
+br\com\bakeflow\fidelizacao\dto\PedidoFinalizadoRequest.class
+br\com\bakeflow\fidelizacao\FidelizacaoServiceApplication.class
